@@ -1,0 +1,21 @@
+name: 'OnPullRequest'
+
+on:  
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+  id-token: write
+
+jobs:
+  node-ecs-pull-request:
+    uses: CailleachOrg/tfc-shared-actions/.github/workflows/node-ecs-pull-request.yml@main
+    with:      
+      aws-region: ${{ vars.DEV_AWS_REGION }}
+      aws-role: ${{ vars.DEV_AWS_ROLE }}
+    secrets:
+      tfc-token: ${{ secrets.TFC_TOKEN }}

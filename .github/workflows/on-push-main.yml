@@ -1,0 +1,21 @@
+name: 'OnPushMain'
+
+on:  
+  push:
+    branches:
+      - 'main'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  node-ecs-publish:
+    uses: CailleachOrg/tfc-shared-actions/.github/workflows/node-ecs-publish.yml@main
+    with:
+      environment_name: 'dev'
+      aws-region: ${{ vars.DEV_AWS_REGION }}
+      aws-role: ${{ vars.DEV_AWS_ROLE }}
+      revision: ${{ github.ref_name }}
+    secrets:
+      tfc-token: ${{ secrets.TFC_TOKEN }}

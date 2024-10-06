@@ -1,0 +1,74 @@
+name: 'On Create Repository'
+
+on:
+  create:
+
+permissions:
+  contents: read
+  id-token: write
+    
+jobs:
+  createAppWorkspace:
+    runs-on: ubuntu-20.04    
+    if: github.ref_name == 'main'
+    steps:
+      - id: checkout
+        name: checkout
+        uses: actions/checkout@v4
+
+      - id: tf-create-workspace-dev
+        name: "[DEV] Create Workspace"
+        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
+        with:
+          workspaceName: "${{ github.event.repository.name }}-app-dev"
+          organizationName: ${{ vars.TFC_ORGANIZATION }}
+          token: ${{ secrets.TFC_TOKEN}}
+          projectId: ${{ vars.DEV_SPACE_PRJ }}
+      - id: tf-create-workspace-hml
+        name: "[HML] Create Workspace"
+        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
+        with:
+          workspaceName: "${{ github.event.repository.name }}-app-hml"
+          organizationName: ${{ vars.TFC_ORGANIZATION }}
+          token: ${{ secrets.TFC_TOKEN}}
+          projectId: ${{ vars.HML_SPACE_PRJ }}
+      - id: tf-create-workspace-prd
+        name: "[PRD] Create Workspace"
+        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
+        with:
+          workspaceName: "${{ github.event.repository.name }}-app-prd"
+          organizationName: ${{ vars.TFC_ORGANIZATION }}
+          token: ${{ secrets.TFC_TOKEN}}
+          projectId: ${{ vars.PRD_SPACE_PRJ }}
+  createInfraWorkspace:
+    runs-on: ubuntu-20.04    
+    if: github.ref_name == 'main'
+    steps:
+      - id: checkout
+        name: checkout
+        uses: actions/checkout@v4
+
+      - id: tf-create-workspace-dev
+        name: "[DEV] Create Workspace"
+        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
+        with:
+          workspaceName: "${{ github.event.repository.name }}-infra-dev"
+          organizationName: ${{ vars.TFC_ORGANIZATION }}
+          token: ${{ secrets.TFC_TOKEN}}
+          projectId: ${{ vars.DEV_SPACE_PRJ }}
+      - id: tf-create-workspace-hml
+        name: "[HML] Create Workspace"
+        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
+        with:
+          workspaceName: "${{ github.event.repository.name }}-infra-hml"
+          organizationName: ${{ vars.TFC_ORGANIZATION }}
+          token: ${{ secrets.TFC_TOKEN}}
+          projectId: ${{ vars.HML_SPACE_PRJ }}
+      - id: tf-create-workspace-prd
+        name: "[PRD] Create Workspace"
+        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
+        with:
+          workspaceName: "${{ github.event.repository.name }}-infra-prd"
+          organizationName: ${{ vars.TFC_ORGANIZATION }}
+          token: ${{ secrets.TFC_TOKEN}}
+          projectId: ${{ vars.PRD_SPACE_PRJ }}
