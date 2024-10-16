@@ -1,25 +1,17 @@
-module "ecs-cluster" {
-  source  = "app.terraform.io/CailleachInfo/ecs-cluster/aws"
-  version = "1.0.2"
-
-  role = var.role
-  environment = var.environment
-  country = var.country
-
-  # ===== DOESN'T change above this line =====
-
-  clusterName = var.clusterName
-}
-
 module "ecs-service" {
-  source  = "app.terraform.io/CailleachInfo/ecs-service/aws"
+  source  = "app.terraform.io/CailleachOrg/ecs-service/aws"
   version = "1.1.5"
 
-  depends_on = [ module.ecs-cluster ]
-
   role = var.role
   environment = var.environment
-  country = var.country
+
+  exposure {
+    public = yes
+    create_gateway = yes
+    gateway_name = "my-own-api-gateway"
+    public_root_path= /customer
+    internal_root_path= /customer
+  }
 
   clusterName = var.clusterName
   serviceName = var.serviceName
