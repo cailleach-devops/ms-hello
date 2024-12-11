@@ -1,27 +1,32 @@
-module "ecs-cluster" {
-  source  = "app.terraform.io/CailleachInfo/ecs-cluster/aws"
-  version = "1.0.2"
-
-  role = var.role
-  environment = var.environment
-  country = var.country
-
-  # ===== DOESN'T change above this line =====
-
-  clusterName = var.clusterName
-}
-
 module "ecs-service" {
-  source  = "app.terraform.io/CailleachInfo/ecs-service/aws"
-  version = "1.1.5"
+  source  = "../../../terraform-aws-ecs-service"
 
-  depends_on = [ module.ecs-cluster ]
-
-  role = var.role
   environment = var.environment
-  country = var.country
 
+  projectName = var.projectName
   clusterName = var.clusterName
   serviceName = var.serviceName
   revision = var.revision
+  
+  healthPath = "/actuator/health"
+  
+  exposedPaths = [
+     {
+	   servicePath = "/"
+	 }
+  ]
 }
+
+/*
+module "database-schema" {
+  source  = "../../../terraform-aws-rds-schema"
+
+  environment = var.environment
+
+  # ===== DOESN'T change above this line =====
+  
+  databaseName = var.projectName
+  schemaName = var.serviceName
+  username = var.serviceName 
+}
+*/
