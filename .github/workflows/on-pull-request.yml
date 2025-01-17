@@ -13,9 +13,8 @@ permissions:
 
 jobs:
   node-ecs-pull-request:
-    uses: CailleachOrg/tfc-shared-actions/.github/workflows/node-ecs-pull-request.yml@main
-    with:      
-      aws-region: ${{ vars.DEV_AWS_REGION }}
-      aws-role: ${{ vars.DEV_AWS_ROLE }}
+    uses: cailleach-devops/tfc-shared-actions/.github/workflows/node-ecs-pull-request.yml@main
+    with:
+      tfc-organization: ${{ vars.TFC_ORGANIZATION }}
     secrets:
       tfc-token: ${{ secrets.TFC_TOKEN }}
