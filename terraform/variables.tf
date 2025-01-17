@@ -2,7 +2,6 @@ variable "role" {}
 variable "region" {}
 
 variable "projectName" {}
-variable "clusterName" {}
 variable "serviceName" {}
 
 variable "albName" {
