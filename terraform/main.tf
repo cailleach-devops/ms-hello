@@ -1,5 +1,6 @@
 module "ecs-service" {
-  source  = "../../../terraform-aws-ecs-service"
+  source  = "app.terraform.io/CailleachOrg/ecs-service/aws"
+  version = "1.1.6"
 
   environment = var.environment
 
@@ -10,11 +11,7 @@ module "ecs-service" {
   
   healthPath = "/actuator/health"
   
-  exposedPaths = [
-     {
-	   servicePath = "/"
-	 }
-  ]
+  exposedPaths = [ { servicePath = "/" } ]
 }
 
 /*
