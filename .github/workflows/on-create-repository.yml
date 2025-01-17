@@ -1,74 +1,46 @@
 name: 'On Create Repository'
 
 on:
-  create:
+  workflow_dispatch:
 
 permissions:
   contents: read
   id-token: write
+
+env:
+  SERVICE_TYPE: 'ecs-tasks'
     
 jobs:
-  createAppWorkspace:
-    runs-on: ubuntu-20.04    
+  createDevResources:
     if: github.ref_name == 'main'
-    steps:
-      - id: checkout
-        name: checkout
-        uses: actions/checkout@v4
+    uses: cailleach-devops/tfc-shared-actions/.github/workflows/tfc-starter.yml@main
+    with:      
+      tfc-organization: ${{ vars.TFC_ORGANIZATION }}
+      tfc-project-id: ${{ vars.DEV_SPACE_PRJ }}
+      git-project: ${{ vars.PROJECT_NAME }}
+      environment: 'dev'
+    secrets:
+      tfc-token: ${{ secrets.TFC_TOKEN }}
 
-      - id: tf-create-workspace-dev
-        name: "[DEV] Create Workspace"
-        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
-        with:
-          workspaceName: "${{ github.event.repository.name }}-app-dev"
-          organizationName: ${{ vars.TFC_ORGANIZATION }}
-          token: ${{ secrets.TFC_TOKEN}}
-          projectId: ${{ vars.DEV_SPACE_PRJ }}
-      - id: tf-create-workspace-hml
-        name: "[HML] Create Workspace"
-        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
-        with:
-          workspaceName: "${{ github.event.repository.name }}-app-hml"
-          organizationName: ${{ vars.TFC_ORGANIZATION }}
-          token: ${{ secrets.TFC_TOKEN}}
-          projectId: ${{ vars.HML_SPACE_PRJ }}
-      - id: tf-create-workspace-prd
-        name: "[PRD] Create Workspace"
-        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
-        with:
-          workspaceName: "${{ github.event.repository.name }}-app-prd"
-          organizationName: ${{ vars.TFC_ORGANIZATION }}
-          token: ${{ secrets.TFC_TOKEN}}
-          projectId: ${{ vars.PRD_SPACE_PRJ }}
-  createInfraWorkspace:
-    runs-on: ubuntu-20.04    
+  createHmlResources:
     if: github.ref_name == 'main'
-    steps:
-      - id: checkout
-        name: checkout
-        uses: actions/checkout@v4
+    uses: cailleach-devops/tfc-shared-actions/.github/workflows/tfc-starter.yml@main
+    with:      
+      tfc-organization: ${{ vars.TFC_ORGANIZATION }}
+      tfc-project-id: ${{ vars.HML_SPACE_PRJ }}
+      git-project: ${{ vars.PROJECT_NAME }}
+      environment: 'hml'
+    secrets:
+      tfc-token: ${{ secrets.TFC_TOKEN }}
 
-      - id: tf-create-workspace-dev
-        name: "[DEV] Create Workspace"
-        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
-        with:
-          workspaceName: "${{ github.event.repository.name }}-infra-dev"
-          organizationName: ${{ vars.TFC_ORGANIZATION }}
-          token: ${{ secrets.TFC_TOKEN}}
-          projectId: ${{ vars.DEV_SPACE_PRJ }}
-      - id: tf-create-workspace-hml
-        name: "[HML] Create Workspace"
-        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
-        with:
-          workspaceName: "${{ github.event.repository.name }}-infra-hml"
-          organizationName: ${{ vars.TFC_ORGANIZATION }}
-          token: ${{ secrets.TFC_TOKEN}}
-          projectId: ${{ vars.HML_SPACE_PRJ }}
-      - id: tf-create-workspace-prd
-        name: "[PRD] Create Workspace"
-        uses: CailleachOrg/tfc-shared-actions/.github/actions/tfc/tfc-create-workspace@main
-        with:
-          workspaceName: "${{ github.event.repository.name }}-infra-prd"
-          organizationName: ${{ vars.TFC_ORGANIZATION }}
-          token: ${{ secrets.TFC_TOKEN}}
-          projectId: ${{ vars.PRD_SPACE_PRJ }}
+  createPrdResources:
+    if: github.ref_name == 'main'
+    uses: cailleach-devops/tfc-shared-actions/.github/workflows/tfc-starter.yml@main
+    with:      
+      tfc-organization: ${{ vars.TFC_ORGANIZATION }}
+      tfc-project-id: ${{ vars.PRD_SPACE_PRJ }}
+      git-project: ${{ vars.PROJECT_NAME }}
+      environment: 'prd'
+    secrets:
+      tfc-token: ${{ secrets.TFC_TOKEN }}
+        
