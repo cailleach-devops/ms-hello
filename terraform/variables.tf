@@ -1,6 +1,3 @@
-variable "role" {}
-variable "region" {}
-
 variable "projectName" {}
 variable "serviceName" {}
 
