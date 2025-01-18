@@ -13,6 +13,7 @@ module "ecs-service" {
   exposedPaths = [ { servicePath = "/" } ]
 }
 
+
 /*
 module "database-schema" {
   source  = "../../../terraform-aws-rds-schema"
