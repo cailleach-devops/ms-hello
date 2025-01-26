@@ -1,6 +1,6 @@
 module "ecs-service" {
   source  = "app.terraform.io/CailleachOrg/ecs-service/aws"
-  version = "1.1.7"
+  version = "1.1.8"
 
   environment = var.environment
 
@@ -12,6 +12,7 @@ module "ecs-service" {
   
   exposedPaths = [ { servicePath = "/" } ]
 }
+
 
 /*
 module "database-schema" {
