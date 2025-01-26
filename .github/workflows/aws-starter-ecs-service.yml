@@ -84,8 +84,8 @@ jobs:
           git-project: ${{ inputs.git-project}}
           aws-account: ${{ inputs.aws-account}}
           environment: ${{ inputs.environment }}
-          region: ${{ inputs.aws-region}}
-          role: ${{ inputs.aws-role}}
+          aws-region: ${{ inputs.aws-region}}
+          aws-role: ${{ inputs.aws-role}}
       - name: Write Role in Repo
         uses: cailleach-devops/tfc-shared-actions/.github/actions/git/git-create-repo-variable@main
         with:
