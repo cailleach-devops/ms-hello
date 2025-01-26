@@ -12,12 +12,14 @@ inputs:
   aws-role:
     required: true
 
-env:
-  upload-role-name: "arn:aws:iam::${{ inputs.aws-account}}:role/${{inputs.git-project}}-${{ github.event.repository.name }}-upload-${{ inputs.environment}}-role"
-
 runs:
   using: "composite"
   steps:
+    - name: compose-role-name
+      id: upload-role
+      shell: bash
+      run: echo "name=arn:aws:iam::${{ inputs.aws-account}}:role/${{inputs.git-project}}-${{ github.event.repository.name }}-upload-${{ inputs.environment}}-role" >> "$GITHUB_OUTPUT"
+
     - name: Checkout
       uses: actions/checkout@v3
 
@@ -31,7 +33,7 @@ runs:
       name: Check if role exists
       continue-on-error: true
       shell: bash
-      run: aws iam get-role --role-name ${{env.upload-role-name}}
+      run: aws iam get-role --role-name ${{steps.upload-role.name}}
       
 
     - name: Create AWS IAM role
@@ -44,9 +46,9 @@ runs:
         sed -i 's/__REPOSITORY__/${{ github.event.repository.name }}/g' ${{github.action_path}}/upload-policy.json
 
         aws iam create-role \
-          --role-name ${{env.upload-role-name}} \
+          --role-name ${{steps.upload-role.name}} \
           --assume-role-policy-document file://${{github.action_path}}/upload-assume-role.json
 
         aws attach-role-policy \
-          --role-name ${{env.upload-role-name}} \
+          --role-name ${{steps.upload-role.name}} \
           --cli-input-yaml file://${{github.action_path}}/upload-policy.json

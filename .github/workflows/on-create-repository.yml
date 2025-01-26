@@ -28,6 +28,7 @@ jobs:
       git-token: ${{ secrets.GH_VARIABLE_TOKEN }}
 
   createHmlResources:
+    needs: [ createDevResources ]
     if: github.ref_name == 'main'
     uses: cailleach-devops/ms-hello/.github/workflows/aws-starter-ecs-service.yml@main
     with:      
@@ -44,6 +45,7 @@ jobs:
       git-token: ${{ secrets.GH_VARIABLE_TOKEN }}
 
   createPrdResources:
+    needs: [ createHmlResources ]
     if: github.ref_name == 'main'
     uses: cailleach-devops/ms-hello/.github/workflows/aws-starter-ecs-service.yml@main
     with:      
