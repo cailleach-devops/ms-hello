@@ -29,8 +29,8 @@ runs:
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        role-to-assume: ${{ inputs.role }}
-        aws-region: ${{ inputs.region }}
+        role-to-assume: ${{ inputs.aws-role }}
+        aws-region: ${{ inputs.aws-region }}
 
     - id: check-role
       name: Check if role exists
