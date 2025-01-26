@@ -41,6 +41,7 @@ jobs:
       aws-account: ${{ vars.HML_AWS_ACCOUNT}}
     secrets:
       tfc-token: ${{ secrets.TFC_TOKEN }}
+      git-token: ${{ secrets.GH_VARIABLE_TOKEN }}
 
   createPrdResources:
     if: github.ref_name == 'main'
@@ -56,4 +57,5 @@ jobs:
       aws-account: ${{ vars.PRD_AWS_ACCOUNT}}
     secrets:
       tfc-token: ${{ secrets.TFC_TOKEN }}
+      git-token: ${{ secrets.GH_VARIABLE_TOKEN }}
         
