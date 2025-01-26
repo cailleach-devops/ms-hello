@@ -13,18 +13,23 @@ env:
 jobs:
   createDevResources:
     if: github.ref_name == 'main'
-    uses: cailleach-devops/tfc-shared-actions/.github/workflows/tfc-starter.yml@main
+    uses: cailleach-devops/ms-hello/.github/workflows/aws-starter-ecs-service.yml@main
     with:      
       tfc-organization: ${{ vars.TFC_ORGANIZATION }}
       tfc-project-id: ${{ vars.DEV_SPACE_PRJ }}
+      git-organization: ${{ github.repository_owner }}
       git-project: ${{ vars.PROJECT_NAME }}
       environment: 'dev'
+      aws-region: ${{ vars.DEV_AWS_REGION }}
+      aws-role: ${{ vars.DEV_AWS_MASTER_ROLE }}
+      aws-account: ${{ vars.DEV_AWS_ACCOUNT}}
     secrets:
       tfc-token: ${{ secrets.TFC_TOKEN }}
+      git-token: ${{ secrets.GH_VARIABLE_TOKEN }}
 
   createHmlResources:
     if: github.ref_name == 'main'
-    uses: cailleach-devops/tfc-shared-actions/.github/workflows/tfc-starter.yml@main
+    uses: cailleach-devops/ms-hello/.github/workflows/aws-starter-ecs-service.yml@main
     with:      
       tfc-organization: ${{ vars.TFC_ORGANIZATION }}
       tfc-project-id: ${{ vars.HML_SPACE_PRJ }}
@@ -35,7 +40,7 @@ jobs:
 
   createPrdResources:
     if: github.ref_name == 'main'
-    uses: cailleach-devops/tfc-shared-actions/.github/workflows/tfc-starter.yml@main
+    uses: cailleach-devops/ms-hello/.github/workflows/aws-starter-ecs-service.yml@main
     with:      
       tfc-organization: ${{ vars.TFC_ORGANIZATION }}
       tfc-project-id: ${{ vars.PRD_SPACE_PRJ }}

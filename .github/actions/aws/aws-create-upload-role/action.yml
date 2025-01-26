@@ -1,0 +1,52 @@
+name: 'AWS Create Upload role'
+description: "Create a role for uploading images"
+inputs:
+  git-project:
+    required: true
+  aws-account:
+    required: true
+  environment:
+    required: true
+  aws-region:
+    required: true
+  aws-role:
+    required: true
+
+env:
+  upload-role-name: "arn:aws:iam::${{ inputs.aws-account}}:role/${{inputs.git-project}}-${{ github.event.repository.name }}-upload-${{ inputs.environment}}-role"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ inputs.role }}
+        aws-region: ${{ inputs.region }}
+
+    - id: check-role
+      name: Check if role exists
+      continue-on-error: true
+      shell: bash
+      run: aws iam get-role --role-name ${{env.upload-role-name}}
+      
+
+    - name: Create AWS IAM role
+      if: steps.check-role.outcome == 'failure'
+      shell: bash
+      run: |
+
+        sed -i 's/__ACOUNT_NAME__/${{inputs.aws-account}}/g' ${{github.action_path}}/upload-policy.json
+        sed -i 's/__AWS_REGION__/${{inputs.aws-region}}/g' ${{github.action_path}}/upload-policy.json
+        sed -i 's/__REPOSITORY__/${{ github.event.repository.name }}/g' ${{github.action_path}}/upload-policy.json
+
+        aws iam create-role \
+          --role-name ${{env.upload-role-name}} \
+          --assume-role-policy-document file://${{github.action_path}}/upload-assume-role.json
+
+        aws attach-role-policy \
+          --role-name ${{env.upload-role-name}} \
+          --cli-input-yaml file://${{github.action_path}}/upload-policy.json
