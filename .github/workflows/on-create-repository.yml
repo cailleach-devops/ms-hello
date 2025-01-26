@@ -35,6 +35,9 @@ jobs:
       tfc-project-id: ${{ vars.HML_SPACE_PRJ }}
       git-project: ${{ vars.PROJECT_NAME }}
       environment: 'hml'
+      aws-region: ${{ vars.HML_AWS_REGION }}
+      aws-role: ${{ vars.HML_AWS_MASTER_ROLE }}
+      aws-account: ${{ vars.HML_AWS_ACCOUNT}}
     secrets:
       tfc-token: ${{ secrets.TFC_TOKEN }}
 
@@ -46,6 +49,9 @@ jobs:
       tfc-project-id: ${{ vars.PRD_SPACE_PRJ }}
       git-project: ${{ vars.PROJECT_NAME }}
       environment: 'prd'
+      aws-region: ${{ vars.PRD_AWS_REGION }}
+      aws-role: ${{ vars.PRD_AWS_MASTER_ROLE }}
+      aws-account: ${{ vars.PRD_AWS_ACCOUNT}}
     secrets:
       tfc-token: ${{ secrets.TFC_TOKEN }}
         
