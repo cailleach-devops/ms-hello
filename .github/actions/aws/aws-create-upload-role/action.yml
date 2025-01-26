@@ -11,6 +11,9 @@ inputs:
     required: true
   aws-role:
     required: true
+outputs:
+  aws-role-name: 
+    value: ${{ steps.upload-role.outputs.name}}    
 
 runs:
   using: "composite"
@@ -33,7 +36,7 @@ runs:
       name: Check if role exists
       continue-on-error: true
       shell: bash
-      run: aws iam get-role --role-name ${{steps.upload-role.name}}
+      run: aws iam get-role --role-name ${{steps.upload-role.outputs.name}}
       
 
     - name: Create AWS IAM role
@@ -46,9 +49,9 @@ runs:
         sed -i 's/__REPOSITORY__/${{ github.event.repository.name }}/g' ${{github.action_path}}/upload-policy.json
 
         aws iam create-role \
-          --role-name ${{steps.upload-role.name}} \
+          --role-name ${{steps.upload-role.outputs.name}} \
           --assume-role-policy-document file://${{github.action_path}}/upload-assume-role.json
 
         aws attach-role-policy \
-          --role-name ${{steps.upload-role.name}} \
+          --role-name ${{steps.upload-role.outputs.name}} \
           --cli-input-yaml file://${{github.action_path}}/upload-policy.json
