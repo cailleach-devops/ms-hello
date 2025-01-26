@@ -33,6 +33,7 @@ jobs:
     with:      
       tfc-organization: ${{ vars.TFC_ORGANIZATION }}
       tfc-project-id: ${{ vars.HML_SPACE_PRJ }}
+      git-organization: ${{ github.repository_owner }}
       git-project: ${{ vars.PROJECT_NAME }}
       environment: 'hml'
       aws-region: ${{ vars.HML_AWS_REGION }}
@@ -47,6 +48,7 @@ jobs:
     with:      
       tfc-organization: ${{ vars.TFC_ORGANIZATION }}
       tfc-project-id: ${{ vars.PRD_SPACE_PRJ }}
+      git-organization: ${{ github.repository_owner }}
       git-project: ${{ vars.PROJECT_NAME }}
       environment: 'prd'
       aws-region: ${{ vars.PRD_AWS_REGION }}
