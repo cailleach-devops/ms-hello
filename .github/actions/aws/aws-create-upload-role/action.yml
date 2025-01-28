@@ -22,8 +22,8 @@ runs:
       id: upload-role
       shell: bash
       run: |
-        echo "name=${{github.repository_owner}}-${{ github.event.repository.name }}-upload-${{ inputs.environment}}-role" >> "$GITHUB_OUTPUT"
-        echo "arn=arn:aws:iam::${{ inputs.aws-account}}:role/${{github.repository_owner}}-${{ github.event.repository.name }}-upload-${{ inputs.environment}}-role" >> "$GITHUB_OUTPUT"
+        echo "name=${{inputs.git-project}}-${{ github.event.repository.name }}-upload-${{ inputs.environment}}-role" >> "$GITHUB_OUTPUT"
+        echo "arn=arn:aws:iam::${{ inputs.aws-account}}:role/${{inputs.git-project}}-${{ github.event.repository.name }}-upload-${{ inputs.environment}}-role" >> "$GITHUB_OUTPUT"
 
     - name: Checkout
       uses: actions/checkout@v3
@@ -53,8 +53,8 @@ runs:
 
         sed -i 's/__AWS_ACCOUNT__/${{inputs.aws-account}}/g' ${{github.action_path}}/upload-policy.json
         sed -i 's/__AWS_REGION__/${{inputs.aws-region}}/g' ${{github.action_path}}/upload-policy.json
-        sed -i 's/__REPOSITORY__/${{ github.event.repository.name }}/g' ${{github.action_path}}/upload-policy.json
-        sed -i 's/__GIT_ORGANIZATION__/${{github.repository_owner}}/g' ${{github.action_path}}/upload-policy.json
+        sed -i 's/__SERVICE__/${{ github.event.repository.name }}/g' ${{github.action_path}}/upload-policy.json
+        sed -i 's/__PROJECT__/${{inputs.git-project}}/g' ${{github.action_path}}/upload-policy.json
         sed -i 's/__ENVIRONMENT__/${{inputs.environment}}/g' ${{github.action_path}}/upload-policy.json
 
         aws iam create-role \
@@ -63,5 +63,5 @@ runs:
 
         aws iam put-role-policy \
           --role-name ${{steps.upload-role.outputs.name}} \
-          --policy-name ${{ github.event.repository.name }}-upload-image
+          --policy-name ${{ github.event.repository.name }}-upload-image \
           --policy-document file://${{github.action_path}}/upload-policy.json
