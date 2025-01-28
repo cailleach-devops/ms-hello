@@ -13,7 +13,7 @@ inputs:
     required: true
 outputs:
   aws-role-name: 
-    value: ${{ steps.upload-role.outputs.name}}    
+    value: ${{ steps.upload-role.outputs.arn}}    
 
 runs:
   using: "composite"
@@ -21,7 +21,9 @@ runs:
     - name: compose-role-name
       id: upload-role
       shell: bash
-      run: echo "name=arn:aws:iam::${{ inputs.aws-account}}:role/${{inputs.git-project}}-${{ github.event.repository.name }}-upload-${{ inputs.environment}}-role" >> "$GITHUB_OUTPUT"
+      run: |
+        echo "name=${{inputs.git-project}}-${{ github.event.repository.name }}-upload-${{ inputs.environment}}-role" >> "$GITHUB_OUTPUT"
+        echo "arn=arn:aws:iam::${{ inputs.aws-account}}:role/${{inputs.git-project}}-${{ github.event.repository.name }}-upload-${{ inputs.environment}}-role" >> "$GITHUB_OUTPUT"
 
     - name: Checkout
       uses: actions/checkout@v3
