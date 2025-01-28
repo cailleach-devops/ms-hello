@@ -46,7 +46,11 @@ runs:
       shell: bash
       run: |
 
-        sed -i 's/__ACOUNT_NAME__/${{inputs.aws-account}}/g' ${{github.action_path}}/upload-policy.json
+        sed -i 's/__AWS_ACCOUNT__/${{inputs.aws-account}}/g' ${{github.action_path}}/upload-assume-role.json
+        sed -i 's/__AWS_REGION__/${{inputs.aws-region}}/g' ${{github.action_path}}/upload-assume-role.json
+        sed -i 's/__REPOSITORY__/${{ github.event.repository.name }}/g' ${{github.action_path}}/upload-assume-role.json
+
+        sed -i 's/__AWS_ACCOUNT__/${{inputs.aws-account}}/g' ${{github.action_path}}/upload-policy.json
         sed -i 's/__AWS_REGION__/${{inputs.aws-region}}/g' ${{github.action_path}}/upload-policy.json
         sed -i 's/__REPOSITORY__/${{ github.event.repository.name }}/g' ${{github.action_path}}/upload-policy.json
 
@@ -54,6 +58,6 @@ runs:
           --role-name ${{steps.upload-role.outputs.name}} \
           --assume-role-policy-document file://${{github.action_path}}/upload-assume-role.json
 
-        aws attach-role-policy \
+        aws iam attach-role-policy \
           --role-name ${{steps.upload-role.outputs.name}} \
           --cli-input-yaml file://${{github.action_path}}/upload-policy.json
