@@ -92,5 +92,5 @@ jobs:
           organizationName: ${{ inputs.git-organization }}
           repositoryName: ${{ github.event.repository.name }}
           name: "${{ inputs.environment}}_AWS_ROLE"
-          value: ${{steps.create-upload-role.aws-role-name}}
+          value: ${{steps.create-upload-role.outputs.aws-role-name}}
           token: ${{ secrets.git-token}}
