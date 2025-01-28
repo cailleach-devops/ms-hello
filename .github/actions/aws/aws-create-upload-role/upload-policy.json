@@ -8,7 +8,7 @@
         "ecr:UploadLayerPart",
         "ecr:PutImage"
       ],
-      "Resource": "arn:aws:ecr:__AWS_REGION__:__AWS_ACCOUNT__:repository/__REPOSITORY__"
+      "Resource": "arn:aws:ecr:__AWS_REGION__:__AWS_ACCOUNT__:__GIT_ORGANIZATION__/__REPOSITORY__-__ENVIRONMENT__"
     }
   ]
 }
