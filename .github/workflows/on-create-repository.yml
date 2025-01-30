@@ -13,7 +13,7 @@ env:
 jobs:
   createDevResources:
     if: github.ref_name == 'main'
-    uses: cailleach-devops/ms-hello/.github/workflows/aws-starter-ecs-service.yml@main
+    uses: cailleach-devops/tfc-shared-actions/.github/workflows/aws-starter-ecs-service.yml@main
     with:      
       tfc-organization: ${{ vars.TFC_ORGANIZATION }}
       tfc-project-id: ${{ vars.DEV_SPACE_PRJ }}
@@ -30,7 +30,7 @@ jobs:
   createHmlResources:
     needs: [ createDevResources ]
     if: github.ref_name == 'main'
-    uses: cailleach-devops/ms-hello/.github/workflows/aws-starter-ecs-service.yml@main
+    uses: cailleach-devops/tfc-shared-actions/.github/workflows/aws-starter-ecs-service.yml@main
     with:      
       tfc-organization: ${{ vars.TFC_ORGANIZATION }}
       tfc-project-id: ${{ vars.HML_SPACE_PRJ }}
@@ -47,7 +47,7 @@ jobs:
   createPrdResources:
     needs: [ createHmlResources ]
     if: github.ref_name == 'main'
-    uses: cailleach-devops/ms-hello/.github/workflows/aws-starter-ecs-service.yml@main
+    uses: cailleach-devops/tfc-shared-actions/.github/workflows/aws-starter-ecs-service.yml@main
     with:      
       tfc-organization: ${{ vars.TFC_ORGANIZATION }}
       tfc-project-id: ${{ vars.PRD_SPACE_PRJ }}
