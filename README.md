@@ -1,3 +1,4 @@
 # node-ecs-template
 
-Forcing onPushMain workflow again
+Deploying after upgrading API exposure module.
+(let's check those greedy paths)
