@@ -8,7 +8,7 @@ module "ecs-service" {
   serviceName = var.serviceName
   revision = var.revision
   
-  healthPath = "/actuator/health"
+  healthPath = "/"
   
   exposedPaths = [ { servicePath = "/" } ]
 }
