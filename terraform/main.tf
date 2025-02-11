@@ -1,6 +1,6 @@
 module "ecs-service" {
   source  = "app.terraform.io/CailleachOrg/ecs-service/aws"
-  version = "1.1.11"
+  version = "1.1.12"
 
   environment = var.environment
 
