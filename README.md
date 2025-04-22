@@ -1,3 +1,3 @@
 # node-ecs-template
 
-Deploying it in another region (California baby!)
+Checking if TFC will trigger with a pull request open event
