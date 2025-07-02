@@ -2,10 +2,9 @@ name: 'On User Action'
 
 on:
   workflow_dispatch:
-
-  inputs:
-    environments:
-      type: environment
+    inputs:
+      environments:
+        type: environment
 
 permissions:
   contents: read
