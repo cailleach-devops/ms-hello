@@ -5,7 +5,7 @@
 Trying to trigger from a link
 
 
-[Pull Request](./actions/workflows/on-pull-request.yml)
+[Pull Request](../../actions/workflows/on-pull-request.yml)
 
 
 <form data-turbo="false" action="/cailleach-devops/ms-hello/actions/manual" accept-charset="UTF-8" method="post">
@@ -14,10 +14,8 @@ Trying to trigger from a link
     <input type="hidden" name="branch" id="branch" value="main" autocomplete="off" class="form-control">
     <input type="hidden" name="show_workflow_tip" id="show_workflow_tip" autocomplete="off" class="form-control">
     <button data-disable-with="Running workflow..." type="submit" data-view-component="true" class="Button--primary Button--small Button mt-2">  
-
-    <span class="Button-content">
-    	<span class="Button-label">Run workflow</span>
-  	</span>
-</button>
-
+	    <span class="Button-content">
+	    	<span class="Button-label">Run workflow</span>
+	  	</span>
+    </button>
 </form>
