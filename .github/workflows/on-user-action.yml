@@ -15,10 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - id: checkout
-      name: checkout
-      uses: actions/checkout@v4    
-
     - name: planOutput
       shell: bash
       run: echo "Estamos aqui  ${var.AWS_ACCOUNT}"
