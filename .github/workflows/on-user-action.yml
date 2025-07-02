@@ -17,4 +17,4 @@ jobs:
     steps:
     - name: planOutput
       shell: bash
-      run: echo "Estamos aqui  ${var.AWS_ACCOUNT}"
+      run: echo "Estamos aqui  ${{var.AWS_ACCOUNT}}"
