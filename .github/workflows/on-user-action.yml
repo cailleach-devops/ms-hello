@@ -13,7 +13,7 @@ permissions:
 jobs:
   justOutput:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment: ${{ inputs.environments }}
 
     steps:
     - name: planOutput
